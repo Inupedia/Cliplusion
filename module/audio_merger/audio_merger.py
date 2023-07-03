@@ -9,12 +9,22 @@ class AudioMerger:
         self.output_path = output_path
 
     def mix_and_overlap(self, sound1, sound2):
+        # Overlap the two sounds
         overlap = sound2[:self.overlap_duration]
-        mixed = sound1[-self.overlap_duration:].overlay(overlap)
-        sound1 = sound1[:-self.overlap_duration] + mixed
-        output = sound1 + sound2[self.overlap_duration:]
-        return output
+        sound1_end = sound1[-self.overlap_duration:]
+        sound1 = sound1[:-self.overlap_duration]
 
+        # Crossfade
+        crossfaded = sound1_end.append(overlap, crossfade=self.overlap_duration)
+
+        # Fade out the end of the first sound, fade in the beginning of the second sound
+        sound1 = sound1.fade_out(self.overlap_duration)
+        sound2 = sound2.fade_in(self.overlap_duration)
+
+        # Combine everything
+        output = sound1 + crossfaded + sound2[self.overlap_duration:]
+        return output
+    
     def join_audio_files(self):
         first_file_path = os.path.join(self.directory, self.filenames[0])
         first_file_format = os.path.splitext(first_file_path)[1].replace(".", "")
