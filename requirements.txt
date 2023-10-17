@@ -4,3 +4,4 @@ opencc
 openai-whisper
 torchaudio
 tqdm
+pysubs2

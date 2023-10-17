@@ -11,7 +11,7 @@ def main():
     audio_merger.export()
 
     audio_transcriber = AudioTranscriber(directory, output_path)
-    audio_transcriber.export()
+    audio_transcriber.transcribe_all()
 
 
 if __name__ == "__main__":
