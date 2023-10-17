@@ -1,0 +1,6 @@
+pydub
+srt
+opencc
+openai-whisper
+torchaudio
+tqdm
